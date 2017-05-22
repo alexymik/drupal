@@ -21,14 +21,12 @@ RUN set -ex \
 		libpq5 \
 	&& apt-get purge -y --auto-remove $buildDeps
 
-# WORKDIR /var/www/html
+# Install memcached
 
-# # https://www.drupal.org/node/3060/release
-# ENV DRUPAL_VERSION 7.54
-# ENV DRUPAL_MD5 3068cbe488075ae166e23ea6cd29cf0f
-
-# RUN curl -fSL "https://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERSION}.tar.gz" -o drupal.tar.gz \
-# 	&& echo "${DRUPAL_MD5} *drupal.tar.gz" | md5sum -c - \
-# 	&& tar -xz --strip-components=1 -f drupal.tar.gz \
-# 	&& rm drupal.tar.gz \
-# 	&& chown -R www-data:www-data sites
+RUN apt-get -y install libz-dev libmemcached-dev libmemcached11 libmemcachedutil2 build-essential \
+&& pecl install memcached-2.2.0 \
+&& echo extension=memcached.so >> /usr/local/etc/php/conf.d/memcached.ini \
+&& apt-get remove -y build-essential libmemcached-dev libz-dev \
+&& apt-get autoremove -y \
+&& apt-get clean \
+&& rm -rf /tmp/pear
