@@ -9,7 +9,7 @@ RUN set -ex \
 		libpq-dev \
 	' \
 	# && apt-get update && apt-get install -y --no-install-recommends $buildDeps && rm -rf /var/lib/apt/lists/* \
-	&& apt-get update && apt-get install -y --no-install-recommends $buildDep \
+	&& apt-get update && apt-get install -y --no-install-recommends $buildDeps \
 	&& docker-php-ext-configure gd \
 		--with-jpeg-dir=/usr \
 		--with-png-dir=/usr \
