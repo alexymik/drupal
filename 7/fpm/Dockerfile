@@ -1,5 +1,5 @@
 # from https://www.drupal.org/requirements/php#drupalversions
-FROM php:7.0-fpm
+FROM php:5.6-fpm
 
 # install the PHP extensions we need
 RUN set -ex \
@@ -8,7 +8,8 @@ RUN set -ex \
 		libpng12-dev \
 		libpq-dev \
 	' \
-	&& apt-get update && apt-get install -y --no-install-recommends $buildDeps && rm -rf /var/lib/apt/lists/* \
+	# && apt-get update && apt-get install -y --no-install-recommends $buildDeps && rm -rf /var/lib/apt/lists/* \
+	&& apt-get update && apt-get install -y --no-install-recommends $buildDep \
 	&& docker-php-ext-configure gd \
 		--with-jpeg-dir=/usr \
 		--with-png-dir=/usr \
@@ -22,12 +23,12 @@ RUN set -ex \
 
 WORKDIR /var/www/html
 
-# https://www.drupal.org/node/3060/release
-ENV DRUPAL_VERSION 7.54
-ENV DRUPAL_MD5 3068cbe488075ae166e23ea6cd29cf0f
+# # https://www.drupal.org/node/3060/release
+# ENV DRUPAL_VERSION 7.54
+# ENV DRUPAL_MD5 3068cbe488075ae166e23ea6cd29cf0f
 
-RUN curl -fSL "https://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERSION}.tar.gz" -o drupal.tar.gz \
-	&& echo "${DRUPAL_MD5} *drupal.tar.gz" | md5sum -c - \
-	&& tar -xz --strip-components=1 -f drupal.tar.gz \
-	&& rm drupal.tar.gz \
-	&& chown -R www-data:www-data sites
+# RUN curl -fSL "https://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERSION}.tar.gz" -o drupal.tar.gz \
+# 	&& echo "${DRUPAL_MD5} *drupal.tar.gz" | md5sum -c - \
+# 	&& tar -xz --strip-components=1 -f drupal.tar.gz \
+# 	&& rm drupal.tar.gz \
+# 	&& chown -R www-data:www-data sites
