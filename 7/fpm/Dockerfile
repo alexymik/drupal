@@ -21,7 +21,7 @@ RUN set -ex \
 		libpq5 \
 	&& apt-get purge -y --auto-remove $buildDeps
 
-WORKDIR /var/www/html
+# WORKDIR /var/www/html
 
 # # https://www.drupal.org/node/3060/release
 # ENV DRUPAL_VERSION 7.54
